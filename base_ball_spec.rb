@@ -59,3 +59,56 @@ describe Player do
     1.1234.round(3).should == 1.123
   end
 end
+
+describe PlayerList do
+  context '元々打率順がソートされている場合' do
+    before do
+      akiyama = Player.new({ box: 515, bat_at: 454, hit: 135 }) #0.297
+      ito     = Player.new({ box: 461, bat_at: 392, hit: 83  }) #0.212
+      @player_list = PlayerList.new([akiyama, ito])
+    end
+    it '選手のリストを作成できること' do
+      @player_list.players[0].batting_average.should == 0.297
+      @player_list.players[1].batting_average.should == 0.212
+    end
+    it '打率の順位を計算できること' do
+      @player_list.sort_by_average[0].batting_average.should == 0.297
+      @player_list.sort_by_average[1].batting_average.should == 0.212
+    end
+  end
+
+  context '元々打率順がソートされていない場合' do
+    before do
+      akiyama = Player.new({ box: 515, bat_at: 454, hit: 135 }) #0.297
+      ito     = Player.new({ box: 461, bat_at: 392, hit: 83  }) #0.212
+      @player_list = PlayerList.new([ito, akiyama])
+    end
+    it '選手のリストを作成できること' do
+      @player_list.players[0].batting_average.should == 0.212
+      @player_list.players[1].batting_average.should == 0.297
+    end
+    it '打率の順位を計算できること' do
+      @player_list.sort_by_average[0].batting_average.should == 0.297
+      @player_list.sort_by_average[1].batting_average.should == 0.212
+    end
+  end
+
+  context '打席数0の人と打率0割の人を比較する場合' do
+    before do
+      akiyama = Player.new({ box: 5, bat_at: 0, hit: 0})
+      ito     = Player.new({ box: 0, bat_at: 0, hit: 0})
+      nagano  = Player.new({ box: 578, bat_at: 519, hit: 164}) #0.316
+      @player_list = PlayerList.new([akiyama, ito, nagano])
+    end
+    it '選手のリストを作成できること' do
+      @player_list.players[0].batting_average.should == 0.000
+      @player_list.players[1].batting_average.should == nil
+      @player_list.players[2].batting_average.should == 0.316
+    end
+    it '打率の順位を計算できること' do
+      @player_list.sort_by_average[0].batting_average.should == 0.316
+      @player_list.sort_by_average[1].batting_average.should == 0.000
+      @player_list.sort_by_average[2].batting_average.should == nil
+    end
+  end
+end

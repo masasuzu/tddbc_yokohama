@@ -20,3 +20,23 @@ class Player
   end
 end
 
+class PlayerList
+  def initialize(players)
+    @players = players
+  end
+
+  attr_reader :players
+
+  def sort_by_average
+    @players.sort do |a, b|
+      if a.batting_average == nil then
+        1
+      elsif b.batting_average == nil then
+        -1
+      else
+        b.batting_average <=> a.batting_average
+      end
+    end
+  end
+end
+
