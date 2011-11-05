@@ -12,5 +12,11 @@ class Player
     return 0.000 if @bat_at == 0
     (@hit.to_f /  @bat_at.to_f).round(3)
   end
+
+  def formated_string
+    return '1.00' if self.batting_average == 1.0
+    return '----' if self.batting_average == nil
+    '.' + (self.batting_average * 1000).truncate.to_s
+  end
 end
 
