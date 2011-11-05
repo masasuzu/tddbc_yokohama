@@ -15,8 +15,10 @@ class Player
 
   def formated_string
     return '1.00' if self.batting_average == 1.0
+    return '.000' if self.batting_average == 0.0
     return '----' if self.batting_average == nil
-    '.' + (self.batting_average * 1000).truncate.to_s
+    sprintf ".%d",  (self.batting_average * 1000)
+#'.' + (self.batting_average * 1000).truncate.to_s
   end
 end
 

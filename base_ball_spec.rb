@@ -51,8 +51,18 @@ describe Player do
     end
   end
 
-  it "打席数が０ではなく、打数が0の場合「0.000」と計算すること" do
-    Player.new({ box: 5, bat_at: 0, hit: 0 }).batting_average.should == 0.000
+  context '打率が0割のとき' do
+    before do
+      @player = Player.new({ box: 5, bat_at: 0, hit: 0  })
+    end
+
+    it "打席数が０ではなく、打数が0の場合「0.000」と計算すること" do
+      @player.batting_average.should == 0.000
+    end
+
+    it '整形した打率を文字列で表示できること' do
+      @player.formated_string.should == '.000'
+    end
   end
 
   it '四捨五入' do
@@ -72,8 +82,9 @@ describe PlayerList do
       @player_list.players[1].batting_average.should == 0.212
     end
     it '打率の順位を計算できること' do
-      @player_list.sort_by_average[0].batting_average.should == 0.297
-      @player_list.sort_by_average[1].batting_average.should == 0.212
+      sorted_list = @player_list.sort_by_average
+      sorted_list[0].batting_average.should == 0.297
+      sorted_list[1].batting_average.should == 0.212
     end
   end
 
@@ -88,8 +99,9 @@ describe PlayerList do
       @player_list.players[1].batting_average.should == 0.297
     end
     it '打率の順位を計算できること' do
-      @player_list.sort_by_average[0].batting_average.should == 0.297
-      @player_list.sort_by_average[1].batting_average.should == 0.212
+      sorted_list = @player_list.sort_by_average
+      sorted_list[0].batting_average.should == 0.297
+      sorted_list[1].batting_average.should == 0.212
     end
   end
 
@@ -106,9 +118,10 @@ describe PlayerList do
       @player_list.players[2].batting_average.should == 0.316
     end
     it '打率の順位を計算できること' do
-      @player_list.sort_by_average[0].batting_average.should == 0.316
-      @player_list.sort_by_average[1].batting_average.should == 0.000
-      @player_list.sort_by_average[2].batting_average.should == nil
+      sorted_list = @player_list.sort_by_average
+      sorted_list[0].batting_average.should == 0.316
+      sorted_list[1].batting_average.should == 0.000
+      sorted_list[2].batting_average.should == nil
     end
   end
 end
