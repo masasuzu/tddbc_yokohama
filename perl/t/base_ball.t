@@ -27,14 +27,13 @@ subtest '選手の打率を整形できること' => sub {
     done_testing();
 };
 
-subtest '選手の順位を取得できること:できること' => sub {
-#my $player_list = BaseBallPlayerList->new([ $sasaki, $hayashi, $ito, $mine ]);
-    my $player_list = BaseBallPlayerList->new([ $ito, $sasaki,]);
-    is($player_list->{players}->[0]->batting_average => 0.333);
-    is($player_list->{players}->[1]->batting_average => 1.000);
+subtest '選手の順位を取得できること' => sub {
+    my $player_list = BaseBallPlayerList->new([ $sasaki, $hayashi, $ito, $mine ]);
     my $sorted_list = $player_list->sort_by_average;
     is($sorted_list->[0]->batting_average => 1.000);
     is($sorted_list->[1]->batting_average => 0.333);
+    is($sorted_list->[2]->batting_average => 0.000);
+    is($sorted_list->[3]->batting_average => undef);
     done_testing();
 };
 
