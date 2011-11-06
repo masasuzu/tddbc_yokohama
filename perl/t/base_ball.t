@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Player;
-use PlayerList;
+use BaseBallPlayer;
+use BaseBallPlayerList;
 
-my $ito     = Player->new(+{box=> 3, bat_at => 3, hit => 1});
-my $sasaki  = Player->new(+{box=> 3, bat_at => 3, hit => 3});
-my $hayashi = Player->new(+{box=> 3, bat_at => 0, hit => 0});
-my $mine    = Player->new(+{box=> 0, bat_at => 0, hit => 0});
+my $ito     = BaseBallPlayer->new(+{box=> 3, bat_at => 3, hit => 1});
+my $sasaki  = BaseBallPlayer->new(+{box=> 3, bat_at => 3, hit => 3});
+my $hayashi = BaseBallPlayer->new(+{box=> 3, bat_at => 0, hit => 0});
+my $mine    = BaseBallPlayer->new(+{box=> 0, bat_at => 0, hit => 0});
 
 subtest '打率の計算ができること' => sub {
     is($ito->batting_average     => 0.333);
@@ -28,8 +28,8 @@ subtest '選手の打率を整形できること' => sub {
 };
 
 subtest '選手の順位を取得できること:できること' => sub {
-#my $player_list = PlayerList->new([ $sasaki, $hayashi, $ito, $mine ]);
-    my $player_list = PlayerList->new([ $ito, $sasaki,]);
+#my $player_list = BaseBallPlayerList->new([ $sasaki, $hayashi, $ito, $mine ]);
+    my $player_list = BaseBallPlayerList->new([ $ito, $sasaki,]);
     is($player_list->{players}->[0]->batting_average => 0.333);
     is($player_list->{players}->[1]->batting_average => 1.000);
     my $sorted_list = $player_list->sort_by_average;

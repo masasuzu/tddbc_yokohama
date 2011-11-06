@@ -1,4 +1,4 @@
-package Player;
+package BaseBallPlayer;
 use strict;
 use warnings;
 

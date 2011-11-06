@@ -1,4 +1,4 @@
-package PlayerList;
+package BaseBallPlayerList;
 use strict;
 use warnings;
 
